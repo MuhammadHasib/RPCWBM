@@ -38,7 +38,7 @@ void FlatTree::book(TTree* tree)
 {
   tree_ = tree;
   tree_->Branch("runnumber", &runnumber_, "runnumber/I");
-  tree_->Branch("date", &date_, "date/l");
+  tree_->Branch("date", &date_, "date/L");
   tree_->Branch("value", &value_, "value/D");
   tree_->Branch("name",  name_  );
 }
