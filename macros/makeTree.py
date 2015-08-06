@@ -7,13 +7,10 @@ import datetime
 
 gROOT.ProcessLine(".L FlatTree.h+");
 ###########
-json_data=open('test.json')
-
-
-############
+json_data=open('test1.json')
 data = json.load(json_data)
 data2 = data['data']
-
+###########
 
 ###########
 f = TFile('tree_RPCWBM.root','RECREATE')
@@ -31,7 +28,7 @@ for i,data3 in enumerate(data2):
   #print "%s\n"%data3['data']
   for ii in data3['data']:
     fevent_.clear()
-    fevent_.date_=int(ii[0])
+    fevent_.date_ =long(ii[0]) 
     fevent_.value_=float(ii[1])
     fevent_.name_.push_back(str(name))
 
