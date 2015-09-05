@@ -69,7 +69,8 @@ def makeTree(jsonAm, jsonBm):
         yyMMdd2 = int(datetime.datetime.fromtimestamp( int(jj[0])/1000 ).strftime('%Y%m%d'))
         hhmmss2 = int(datetime.datetime.fromtimestamp( int(jj[0])/1000 ).strftime('%H%M%S'))
         #print str(yyMMdd2) +" "+ str(hhmmss2) +" "+str(jj[1])
-        if yyMMdd2 < yyMMdd and hhmmss2 < hhmmss : value2_ = float(jj[1])
+        if (yyMMdd2 < yyMMdd) or (yyMMdd2 == yyMMdd) and (hhmmss2 < hhmmss or hhmmss2==hhmmss) : value2_ = float(jj[1])
+        #if yyMMdd2 < yyMMdd and hhmmss2 < hhmmss : value2_ = float(jj[1])
       fevent_.value2_ = value2_
       #print "name1:"+name+", name2:"+dataB2[j]['name']
       if value2_>-1 : tree_.Fill()
