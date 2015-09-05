@@ -26,13 +26,12 @@ EN4 = "Region=1\&Disk=0\&ChamberD4=36\&"
 EP4 = "Region=1\&Disk=7\&ChamberD4=36\&"
 
 for i in range(0,len(datelist)-1):
-  date1 = "beginDate="+datelist[i]+"\&"
-  date2 = "endDate="+datelist[i+1]+"\&"
-  commandHVN4 = command1+outputNameHVN4[i]+command2+hv+option+date2+EN4
-  commandHIN4 = command1+outputNameHIN4[i]+command2+hi+option+date2+EN4
+  date = "beginDate="+datelist[i]+"\&endDate="+datelist[i+1]+"\&"
+  commandHVN4 = command1+outputNameHVN4[i]+command2+hv+option+date+EN4
+  commandHIN4 = command1+outputNameHIN4[i]+command2+hi+option+date+EN4
 
-  commandHVP4 = command1+outputNameHVP4[i]+command2+hv+option+date2+EP4
-  commandHIP4 = command1+outputNameHIP4[i]+command2+hi+option+date2+EP4
+  commandHVP4 = command1+outputNameHVP4[i]+command2+hv+option+date+EP4
+  commandHIP4 = command1+outputNameHIP4[i]+command2+hi+option+date+EP4
 
 
   print commandHVN4
