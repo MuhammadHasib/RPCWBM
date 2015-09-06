@@ -7,18 +7,26 @@ wheelN = range(0,5)
 disk = ["EN4","EN3","EN2","EN1","EP1","EP2","EP3","EP4"]
 diskNN = ["4","3","2","1","1","2","3","4"]
 diskN = range(0,8)
-#print diskN
+MM =["01","02","03","04","05","06","06","07","08","09","11","12"]
+print MM
 
-def dateSets(YYYY,M1, M2 ):
+def dateSets(YYYY,M1,YYYY2, M2 ):
   dateSet = []
   YY =str(YYYY)
-  DHMS = ".01%%2000:00:00"
-  for i in range(0,M2-M1): 
-    MM1=  str( ("0%d"% (M1+i)  ) )
-    MM2=  str( ("0%d"% (M1+i+1)) )
-    if (M1+i)>9    :  MM1=  str( ("%d"% (M1+i)  ) )
-    if (M1+i+1)>9  :  MM2=  str( ("%d"% (M1+i+1)) )
-    dateSet.append( "beginDate="+YY+"."+MM1+DHMS+"\&endDate="+YY+"."+MM2+DHMS+"\&" )
+  YY2 =str(YYYY2)
+  DHMS1 = ".01%%2000:00:00"
+  DHMS2 = ".15%%2000:00:00"
+  DHMS3 = ".01%%2000:00:00"
+  YY3 = YYYY2-YYYY
+  for i in range(0, (YY3*12)+(M2-M1)+1 ): 
+    if M1+i-1>-1 and M1+i-1<12           :  MM1=  YY+"."+MM[M1+i-1]
+    elif M1+i-1>11 and (YYYY+1) <= YYYY2 :  MM1=  str(YYYY+1)+"."+MM[M1+i-1-12]
+
+    if M1+i>-1 and M1+i<12               :  MM2=  YY+"."+MM[M1+i]
+    elif M1+i>11 and (YYYY+1) <= YYYY2   :  MM2=  str(YYYY+1)+"."+MM[M1+i-12]
+
+    dateSet.append( "beginDate="+MM1+DHMS1+"\&endDate="+MM1+DHMS2+"\&" )
+    dateSet.append( "beginDate="+MM1+DHMS2+"\&endDate="+MM2+DHMS3+"\&" )
   return dateSet
 
 ###############################################
@@ -52,10 +60,11 @@ option = "SubMenu=0\&Type=1\&TimeLine=0\&Backdoor=1\&"
 DiskSel = diskSels()
 WheelSel = wheelSels()
 #print str(DiskSel)
-DateSets = dateSets(2015,1,9)
+DateSets = dateSets(2015,1,2015,9)
 
-print WheelSel 
+#print DateSets
 
+#ddd="""
 CMDSets = []
 for j,dateSet in enumerate(DateSets):
   for i,w in enumerate(wheel):
@@ -76,4 +85,5 @@ for j,dateSet in enumerate(DateSets):
 for cmd in CMDSets:
   print cmd
   os.system(cmd)
+#"""
 
