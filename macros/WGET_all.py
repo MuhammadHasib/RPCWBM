@@ -15,8 +15,9 @@ def dateSets(YYYY,M1,YYYY2, M2 ):
   YY =str(YYYY)
   YY2 =str(YYYY2)
   DHMS1 = ".01%%2000:00:00"
-  DHMS2 = ".15%%2000:00:00"
-  DHMS3 = ".01%%2000:00:00"
+  DHMS2 = ".10%%2000:00:00"
+  DHMS3 = ".20%%2000:00:00"
+  DHMS4 = ".01%%2000:00:00"
   YY3 = YYYY2-YYYY
   for i in range(0, (YY3*12)+(M2-M1)+1 ): 
     if M1+i-1>-1 and M1+i-1<12           :  MM1=  YY+"."+MM[M1+i-1]
@@ -26,6 +27,7 @@ def dateSets(YYYY,M1,YYYY2, M2 ):
     elif M1+i>11 and (YYYY+1) <= YYYY2   :  MM2=  str(YYYY+1)+"."+MM[M1+i-12]
 
     dateSet.append( "beginDate="+MM1+DHMS1+"\&endDate="+MM1+DHMS2+"\&" )
+    dateSet.append( "beginDate="+MM1+DHMS2+"\&endDate="+MM1+DHMS3+"\&" )
     dateSet.append( "beginDate="+MM1+DHMS2+"\&endDate="+MM2+DHMS3+"\&" )
   return dateSet
 
