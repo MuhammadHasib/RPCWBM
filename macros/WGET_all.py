@@ -28,7 +28,7 @@ def dateSets(YYYY,M1,YYYY2, M2 ):
 
     dateSet.append( "beginDate="+MM1+DHMS1+"\&endDate="+MM1+DHMS2+"\&" )
     dateSet.append( "beginDate="+MM1+DHMS2+"\&endDate="+MM1+DHMS3+"\&" )
-    dateSet.append( "beginDate="+MM1+DHMS2+"\&endDate="+MM2+DHMS3+"\&" )
+    dateSet.append( "beginDate="+MM1+DHMS3+"\&endDate="+MM2+DHMS4+"\&" )
   return dateSet
 
 ###############################################
