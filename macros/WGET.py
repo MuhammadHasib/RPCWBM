@@ -9,8 +9,8 @@ outputNameHVP4 = []
 outputNameHIP4 = []
 #for only 2015
 for i in range(1,10):
-  if i<10 : datelist.append( ("2015.0%d.01%%2000:00:00"%i) )
-  else    : datelist.append( ("2015.%d.01%%2000:00:00"%i) )
+  if i<10 : datelist.append( ("2015.0%d.01"%i)+("+12%3A40%3A09") )
+  else    : datelist.append( ("2015.%d.01"%i)+("+12%3A40%3A09") )
   outputNameHVN4.append( ("HV_EN4_2015_%d.txt"%i) )
   outputNameHIN4.append( ("HI_EN4_2015_%d.txt"%i) )
   outputNameHVP4.append( ("HV_EP4_2015_%d.txt"%i) )
