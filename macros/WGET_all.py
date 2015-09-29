@@ -14,10 +14,10 @@ def dateSets(YYYY,M1,YYYY2, M2 ):
   dateSet = []
   YY =str(YYYY)
   YY2 =str(YYYY2)
-  DHMS1 = ".01%%2000:00:00"
-  DHMS2 = ".10%%2000:00:00"
-  DHMS3 = ".20%%2000:00:00"
-  DHMS4 = ".01%%2000:00:00"
+  DHMS1 = ".01+12%3A40%3A09"#".01%%2000:00:00"
+  DHMS2 = ".10+12%3A40%3A09"#".10%%2000:00:00"
+  DHMS3 = ".20+12%3A40%3A09"#".20%%2000:00:00"
+  DHMS4 = ".01+12%3A40%3A09"#".01%%2000:00:00"
   YY3 = YYYY2-YYYY
   for i in range(0, (YY3*12)+(M2-M1)+1 ): 
     if M1+i-1>-1 and M1+i-1<12           :  MM1=  YY+"."+MM[M1+i-1]
@@ -62,7 +62,7 @@ option = "SubMenu=0\&Type=1\&TimeLine=0\&Backdoor=1\&"
 DiskSel = diskSels()
 WheelSel = wheelSels()
 #print str(DiskSel)
-DateSets = dateSets(2015,1,2015,9)
+DateSets = dateSets(2015,1,2015,2)
 
 #print DateSets
 
