@@ -7,6 +7,7 @@ wheelN = range(0,5)
 disk = ["EN4","EN3","EN2","EN1","EP1","EP2","EP3","EP4"]
 diskNN = ["4","3","2","1","1","2","3","4"]
 diskN = range(0,8)
+
 MM =["01","02","03","04","05","06","06","07","08","09","11","12"]
 print MM
 
@@ -33,8 +34,8 @@ def dateSets(YYYY,M1,YYYY2, M2 ):
 
 ###############################################
 def diskSel(diskN_):
-  if diskN_==3 or diskN_==4 : return ("Region=1\&Disk=%d\&ChamberD1R23=36\&"% diskN_ )
-  else                      : return ("Region=1\&Disk=%d\&ChamberD%s=36\&"% (diskN_,diskNN[diskN_]) )
+  if diskN_==3 or diskN_==4 : return ("Region=1\&Disk=%d\&RingD1=3\&RingD2=2\&RingD3=2\&ChamberD1R23=36\&"% diskN_ )
+  else                      : return ("Region=1\&Disk=%d\&RingD1=3\&RingD2=2\&RingD3=2\&ChamberD%s=36\&"% (diskN_,diskNN[diskN_]) )
 def diskSels():
   DiskSel = []
   for i in diskN : DiskSel.append( diskSel(i) )
@@ -74,15 +75,17 @@ for j,dateSet in enumerate(DateSets):
     output2 = "HI_"+w+"_"+str(j)+".txt"
     selection1 = hv+option+WheelSel[i]+dateSet
     selection2 = hi+option+WheelSel[i]+dateSet
-    CMDSets.append( makeCMD(command1,output1,command2, selection1 ) )
-    CMDSets.append( makeCMD(command1,output2,command2, selection2 ) )
+    #CMDSets.append( makeCMD(command1,output1,command2, selection1 ) )
+    #CMDSets.append( makeCMD(command1,output2,command2, selection2 ) )
   for i,e in enumerate(disk):
-    output1 = "HV_"+e+"_"+str(j)+".txt"
-    output2 = "HI_"+e+"_"+str(j)+".txt"
-    selection1 = hv+option+DiskSel[i]+dateSet
-    selection2 = hi+option+DiskSel[i]+dateSet
-    CMDSets.append( makeCMD(command1,output1,command2, selection1 ) )
-    CMDSets.append( makeCMD(command1,output2,command2, selection2 ) )
+    #if e.find("EN1")>-1 or e.find("EP1")>-1:
+    if True:
+      output1 = "HV_"+e+"_"+str(j)+".txt"
+      output2 = "HI_"+e+"_"+str(j)+".txt"
+      selection1 = hv+option+DiskSel[i]+dateSet
+      selection2 = hi+option+DiskSel[i]+dateSet
+      CMDSets.append( makeCMD(command1,output1,command2, selection1 ) )
+      CMDSets.append( makeCMD(command1,output2,command2, selection2 ) )
 
 for cmd in CMDSets:
   print cmd
