@@ -149,7 +149,7 @@ jsonBm.mergeJSON(jsonNs)
 jsonAm.mergeJSON(jsonOs)
 jsonBm.mergeJSON(jsonPs)
 FulljsonaftermargeAm=jsonAm.getData()
-FulljsonaftermargeBm=jsonAm.getData()
+FulljsonaftermargeBm=jsonBm.getData()
 #print "bbbbbbbbbbb"+str(jsonBm)+"bbbbbbbb"
 #print "bbbbbbbbbbb"+str(FulljsonaftermargeAm)+"bbbbbbbb"
 #print "bbbbbbbbbbb"+str(FulljsonaftermargeBm)+"bbbbbbbb"
