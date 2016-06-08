@@ -49,6 +49,28 @@ def fitTGraph(tg,idx,functexAll,tfs):
   c1.Print("plots/"+tg.GetName()+".png")
   return c1,tg,tex
 
+def meanTGraph(tg,meanRmsAll):
+  Nbin = tg.GetN()
+  xx=tg.GetX() 
+  yy=tg.GetY() 
+  zz=[]
+  m = 0.
+  mm = 0.
+  NN=0.
+  for i in range(0,Nbin):
+    if yy[i]>0: z=xx[i]/yy[i]
+    else      : continue
+    zz.append(z)
+    m+=z
+    mm+=z*z
+    NN+=1.
+
+  mean = m/NN
+  rms  = (  (mm/NN) - (m/NN)**2  )**0.5
+  
+  meanRmsAll[tg.GetName()]={"mean":mean,"rms":rms}
+
+
 def makeCanvasAll(name,tfs,pol):
   c1 = TCanvas("c1"+name,"",1200,400)
   x,y,z=[],[],[]
@@ -80,13 +102,14 @@ def getValueInALumi(tfs):
     out[xa]={"lumi10":lumi10,"lumi5":lumi5, "data":tfs[xa]}
   return out
 
-def printValueInALumi(values,ytitle):
-  aaa = "name, "+ytitle+"(10^34),  "+ytitle+"(5x10^34), funcP0, funcP1, funcP0err, funcP1err, NDF, Chi^2 \n"
+def printValueInALumi(values,meanRmsAll,ytitle):
+  aaa = "name, "+ytitle+"(10^34),  "+ytitle+"(5x10^34), funcP0, funcP1, funcP0err, funcP1err, NDF, Chi^2, mean of "+ytitle+"/luminosity, rms of "+ytitle+"/luminosity \n"
   for i,xa in enumerate(sorted(values.keys())):
     aaa+= xa+", "+str(values[xa]["lumi10"])+", "+str(values[xa]["lumi5"])
     aaa+= ", "+str(values[xa]["data"]["p0"])+", "+str(values[xa]["data"]["p1"])
     aaa+= ", "+str(values[xa]["data"]["p0err"])+", "+str(values[xa]["data"]["p1err"])
     aaa+= ", "+str(values[xa]["data"]["ndf"])+", "+str(values[xa]["data"]["chi2"])
+    aaa+= ", "+str(meanRmsAll[xa]["mean"])+", "+str(meanRmsAll[xa]["rms"])
     aaa+="\n"
   return aaa
 
@@ -105,14 +128,16 @@ def main():
   temp = {}
   functexAll = {}
   tfs = {}
+  meanRmsAll = {}
 
   for i,tg in enumerate(tgs):
     temp[i]=fitTGraph(tg,i,functexAll,tfs)
+    meanTGraph(tg,meanRmsAll)
 
   aaa = makeCanvasAll("b",tfs,"p0")
   bbb = makeCanvasAll("a",tfs,"p1")
   ccc = getValueInALumi(tfs)
-  ddd = printValueInALumi(ccc,ytitle)
+  ddd = printValueInALumi(ccc,meanRmsAll,ytitle)
 
   with open("Output_"+filename+".csv", "w") as text_file:
       text_file.write(ddd)
