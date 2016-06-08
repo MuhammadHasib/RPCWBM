@@ -11,12 +11,14 @@ def addLegendText(text):
 
 def getTGraphFlat(f1):
   tgs = []
+  ytitle=""
   for key in [x.GetName() for x in f1.GetListOfKeys()]:
     obj = f1.Get(key)
     if obj == None: continue
     elif obj.IsA().InheritsFrom("TGraph"):
+     if ytitle=="" : ytitle=obj.GetYaxis().GetTitle()
      tgs.append( copy.deepcopy(obj) )
-  return tgs
+  return tgs,ytitle
 
 def fitTGraph(tg,idx,functexAll,tfs):
   print ""
@@ -72,8 +74,8 @@ def getValueInALumi(tfs):
     out[xa]={"lumi10":lumi10,"lumi5":lumi5}
   return out
 
-def printValueInALumi(values):
-  aaa = ""
+def printValueInALumi(values,ytitle):
+  aaa = "name, "+ytitle+"(10^34),  "+ytitle+"(5x10^34) \n"
   for i,xa in enumerate(sorted(values.keys())):
     aaa+= xa+", "+str(values[xa]["lumi10"])+", "+str(values[xa]["lumi5"])+"\n"
   return aaa
@@ -88,7 +90,7 @@ def main():
   import os
   loc = os.getcwd()
   f = TFile.Open(loc+"/"+filename+".root")
-  tgs = getTGraphFlat(f)
+  tgs,ytitle = getTGraphFlat(f)
 
   temp = {}
   functexAll = {}
@@ -100,7 +102,7 @@ def main():
   aaa = makeCanvasAll("a",tfs,"p0")
   bbb = makeCanvasAll("b",tfs,"p1")
   ccc = getValueInALumi(tfs)
-  ddd = printValueInALumi(ccc)
+  ddd = printValueInALumi(ccc,ytitle)
 
   with open("Output_"+filename+".txt", "w") as text_file:
       text_file.write(ddd)
