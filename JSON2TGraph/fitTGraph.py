@@ -63,6 +63,20 @@ def makeCanvasAll(name,tfs,pol):
 
   return c1,g
 
+def getValueInALumi(tfs):
+  out = {}
+  lumi = 10000
+  for i,xa in enumerate(sorted(tfs.keys())):
+    lumi10=tfs[xa]["p0"]*10*lumi+tfs[xa]["p1"]
+    lumi5=tfs[xa]["p0"]*5*lumi+tfs[xa]["p1"]
+    out[xa]={"lumi10":lumi10,"lumi5":lumi5}
+  return out
+
+def printValueInALumi(values):
+  aaa = ""
+  for i,xa in enumerate(sorted(values.keys())):
+    aaa+= xa+", "+str(values[xa]["lumi10"])+", "+str(values[xa]["lumi5"])+"\n"
+  return aaa
 
 def main():
   import sys
@@ -85,6 +99,11 @@ def main():
 
   aaa = makeCanvasAll("a",tfs,"p0")
   bbb = makeCanvasAll("b",tfs,"p1")
+  ccc = getValueInALumi(tfs)
+  ddd = printValueInALumi(ccc)
+
+  with open("Output_"+filename+".txt", "w") as text_file:
+      text_file.write(ddd)
 
   return functexAll,temp,tfs,aaa,bbb
 
