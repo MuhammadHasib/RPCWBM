@@ -40,7 +40,7 @@ def fitTGraph(tg,idx,functexAll,tfs):
   ndf = myfunc.GetNDF()
   chi2 = myfunc.GetChisquare()
 
-  functext="y = "+str(round(p0*1000)/1000)+"x + "+str(round(p1*100000)/100000.)
+  functext="y = "+str(round(p1*10000)/10000)+"x + "+str(round(p0*10000)/10000.)
   functexAll[tg.GetName()] = functext
   tfs[tg.GetName()]={"p0":p0,"p1":p1,"p0err":p0err,"p1err":p1err,"ndf":ndf,"chi2":chi2}
 
@@ -75,8 +75,8 @@ def getValueInALumi(tfs):
   out = {}
   lumi = 10000
   for i,xa in enumerate(sorted(tfs.keys())):
-    lumi10=tfs[xa]["p0"]*10*lumi+tfs[xa]["p1"]
-    lumi5=tfs[xa]["p0"]*5*lumi+tfs[xa]["p1"]
+    lumi10=tfs[xa]["p1"]*10*lumi+tfs[xa]["p0"]
+    lumi5=tfs[xa]["p1"]*5*lumi+tfs[xa]["p0"]
     out[xa]={"lumi10":lumi10,"lumi5":lumi5, "data":tfs[xa]}
   return out
 
@@ -109,8 +109,8 @@ def main():
   for i,tg in enumerate(tgs):
     temp[i]=fitTGraph(tg,i,functexAll,tfs)
 
-  aaa = makeCanvasAll("a",tfs,"p0")
-  bbb = makeCanvasAll("b",tfs,"p1")
+  aaa = makeCanvasAll("b",tfs,"p0")
+  bbb = makeCanvasAll("a",tfs,"p1")
   ccc = getValueInALumi(tfs)
   ddd = printValueInALumi(ccc,ytitle)
 
