@@ -104,7 +104,7 @@ def main():
   ccc = getValueInALumi(tfs)
   ddd = printValueInALumi(ccc,ytitle)
 
-  with open("Output_"+filename+".txt", "w") as text_file:
+  with open("Output_"+filename+".csv", "w") as text_file:
       text_file.write(ddd)
 
   return functexAll,temp,tfs,aaa,bbb
