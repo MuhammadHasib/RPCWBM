@@ -1,6 +1,7 @@
 JSON to TGraph
 ===================
 
+usage :
 > python RPCWBM_JSON2TGraph.py filename
 
 > python -i fitTGraph.py 
