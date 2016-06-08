@@ -33,10 +33,16 @@ def fitTGraph(tg,idx,functexAll,tfs):
   myfunc.SetName(tg.GetName())
 
   p0=myfunc.GetParameter(0)
+  p0err=myfunc.GetParError(0) 
+
   p1=myfunc.GetParameter(1)
+  p1err=myfunc.GetParError(1) 
+  ndf = myfunc.GetNDF()
+  chi2 = myfunc.GetChisquare()
+
   functext="y = "+str(round(p0*1000)/1000)+"x + "+str(round(p1*100000)/100000.)
   functexAll[tg.GetName()] = functext
-  tfs[tg.GetName()]={"p0":p0,"p1":p1}
+  tfs[tg.GetName()]={"p0":p0,"p1":p1,"p0err":p0err,"p1err":p1err,"ndf":ndf,"chi2":chi2}
 
   tex=addLegendText(functext)
   tex.Draw()
@@ -71,13 +77,17 @@ def getValueInALumi(tfs):
   for i,xa in enumerate(sorted(tfs.keys())):
     lumi10=tfs[xa]["p0"]*10*lumi+tfs[xa]["p1"]
     lumi5=tfs[xa]["p0"]*5*lumi+tfs[xa]["p1"]
-    out[xa]={"lumi10":lumi10,"lumi5":lumi5}
+    out[xa]={"lumi10":lumi10,"lumi5":lumi5, "data":tfs[xa]}
   return out
 
 def printValueInALumi(values,ytitle):
-  aaa = "name, "+ytitle+"(10^34),  "+ytitle+"(5x10^34) \n"
+  aaa = "name, "+ytitle+"(10^34),  "+ytitle+"(5x10^34), funcP0, funcP1, funcP0err, funcP1err, NDF, Chi^2 \n"
   for i,xa in enumerate(sorted(values.keys())):
-    aaa+= xa+", "+str(values[xa]["lumi10"])+", "+str(values[xa]["lumi5"])+"\n"
+    aaa+= xa+", "+str(values[xa]["lumi10"])+", "+str(values[xa]["lumi5"])
+    aaa+= ", "+str(values[xa]["data"]["p0"])+", "+str(values[xa]["data"]["p1"])
+    aaa+= ", "+str(values[xa]["data"]["p0err"])+", "+str(values[xa]["data"]["p1err"])
+    aaa+= ", "+str(values[xa]["data"]["ndf"])+", "+str(values[xa]["data"]["chi2"])
+    aaa+="\n"
   return aaa
 
 def main():
