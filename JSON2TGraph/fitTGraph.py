@@ -38,13 +38,13 @@ def fitTGraph(tg,idx,functexAll,tfs):
 
   tex=addLegendText(functext)
   tex.Draw()
-  c1.Print(tg.GetName()+".png")
+  c1.Print("plots/"+tg.GetName()+".png")
   return c1,tg,tex
 
 def makeCanvasAll(name,tfs,pol):
   c1 = TCanvas("c1"+name,"",1200,400)
   x,y,z=[],[],[]
-  for i,xa in enumerate(tfs.keys()):
+  for i,xa in enumerate(sorted(tfs.keys())):
     y.append(tfs[xa][pol])
     x.append(i+1)
     z.append(xa)
