@@ -2,6 +2,7 @@ from ROOT import TFile,TGraph,TCanvas,TLatex,TLegend,TH1D
 from array import array
 import copy
 
+
 def addLegendText(text):
   tex2 = TLatex(-20.,50.,text)
   tex2.SetX(0.25),        tex2.SetY(0.83)
@@ -20,7 +21,7 @@ def getTGraphFlat(f1):
      tgs.append( copy.deepcopy(obj) )
   return tgs,ytitle
 
-def fitTGraph(tg,idx,functexAll,tfs):
+def fitTGraph(tg,idx,functexAll,tfs,outputfolder):
   print ""
   print ""
   c1 = TCanvas("c1"+str(idx),"",400,400)
@@ -46,7 +47,7 @@ def fitTGraph(tg,idx,functexAll,tfs):
 
   tex=addLegendText(functext)
   tex.Draw()
-  c1.Print("plots/"+tg.GetName()+".png")
+  c1.Print(outputfolder+"/"+tg.GetName()+".png")
   return c1,tg,tex
 
 def meanTGraph(tg,meanRmsAll):
@@ -71,8 +72,10 @@ def meanTGraph(tg,meanRmsAll):
   meanRmsAll[tg.GetName()]={"mean":mean,"rms":rms}
 
 
-def makeCanvasAll(name,tfs,pol):
+def makeCanvasAll(name,tfs,pol,outputfolder):
   c1 = TCanvas("c1"+name,"",1200,400)
+  c1.SetBottomMargin(0.33)
+
   x,y,z=[],[],[]
   for i,xa in enumerate(sorted(tfs.keys())):
     y.append(tfs[xa][pol])
@@ -90,6 +93,7 @@ def makeCanvasAll(name,tfs,pol):
     g.GetXaxis().SetBinLabel(binIndex,z[i])
 
   g.Draw()
+  c1.Print(outputfolder+"/"+name+".png")
 
   return c1,g
 
@@ -116,10 +120,11 @@ def printValueInALumi(values,meanRmsAll,ytitle):
 def main():
   import sys
   if len(sys.argv) < 2:
-    print "usage : python fitTGraph.py filename"
+    print "usage : python fitTGraph.py filename outputfolder"
     sys.exit()
 
   filename = sys.argv[1]
+  outputfolder = sys.argv[2]
   import os
   loc = os.getcwd()
   f = TFile.Open(loc+"/"+filename+".root")
@@ -131,11 +136,11 @@ def main():
   meanRmsAll = {}
 
   for i,tg in enumerate(tgs):
-    temp[i]=fitTGraph(tg,i,functexAll,tfs)
+    temp[i]=fitTGraph(tg,i,functexAll,tfs,outputfolder)
     meanTGraph(tg,meanRmsAll)
 
-  aaa = makeCanvasAll("b",tfs,"p0")
-  bbb = makeCanvasAll("a",tfs,"p1")
+  aaa = makeCanvasAll("b",tfs,"p0",outputfolder)
+  bbb = makeCanvasAll("a",tfs,"p1",outputfolder)
   ccc = getValueInALumi(tfs)
   ddd = printValueInALumi(ccc,meanRmsAll,ytitle)
 
