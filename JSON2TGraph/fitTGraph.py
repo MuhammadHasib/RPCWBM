@@ -47,7 +47,7 @@ def fitTGraph(tg,idx,functexAll,tfs,outputfolder):
 
   tex=addLegendText(functext)
   tex.Draw()
-  c1.Print(outputfolder+"/"+tg.GetName()+".png")
+  c1.Print(outputfolder+"/"+tg.GetName()+".pdf")
   return c1,tg,tex
 
 def meanTGraph(tg,meanRmsAll):
@@ -93,7 +93,7 @@ def makeCanvasAll(name,tfs,pol,outputfolder):
     g.GetXaxis().SetBinLabel(binIndex,z[i])
 
   g.Draw()
-  c1.Print(outputfolder+"/"+name+".png")
+  c1.Print(outputfolder+"/"+name+".pdf")
 
   return c1,g
 
